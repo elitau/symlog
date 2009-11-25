@@ -1,0 +1,23 @@
+<h1>New survey</h1>
+
+<% form_for(@survey) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :described_person %><br />
+    <%= f.text_field :described_person %>
+  </p>
+  <%- Survey.person_descriptions.each_with_index do |desc, i|-%>
+    <p>
+      <%= f.label desc, "#{i+1}.#{t(desc, :scope => :survey)}" %><br />
+      <%- Survey::POSSIBLE_RATINGS.each do |rating_name| -%>
+        <%= f.radio_button desc, rating_name %> <%= rating_name %> &nbsp;&nbsp;
+      <%- end %>
+    </p>
+  <%- end -%>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', surveys_path %>
