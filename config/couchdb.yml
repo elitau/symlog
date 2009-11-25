@@ -1,3 +1,3 @@
 development: symlog
 test: symlog_test
-production: http://neuezone.org/symlog
+production: symlog
