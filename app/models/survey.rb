@@ -1,47 +1,26 @@
 class Survey
+  
   include CouchPotato::Persistence
+  include Symlog
   
   property :described_person
   
   # Person descriptions
-  property :aktiv
-  property :extravertiert
-  property :zielbewusst
-  property :tatkräftig
-  property :disziplinierend
-  property :dominant
-  property :geltungssuchend
-  property :macht_spaesse
-  property :optimitstisch
-  property :freundlich
-  property :interessiert
-  property :analytisch
-  property :kritisch
-  property :unfreundlich
-  property :uninteressiert
-  property :emotional
-  property :warmherzig
-  property :verstaendnisvoll
-  property :ruecksichtnehmend
-  property :besonnen
-  property :selbstkritisch
-  property :traurig
-  property :entmutigt
-  property :unentschlossen
-  property :behaglich
-  property :passiv
-
-  cattr_accessor :person_descriptions
-  self.person_descriptions = property_names - [:created_at, :updated_at, :described_person]
-  
-  person_descriptions.each do |prop|
-    validates_numericality_of prop, :if => lambda { prop.nil? }
+  Description.all.each do |description|
+    property description.name
   end
   
   view :all, :key => :created_at
   
-  POSSIBLE_RATINGS = [:nie, :selten, :manchmal, :häufig, :immer]
+  POSSIBLE_RATINGS = {
+    :nie      => 0,
+    :selten   => 1,
+    :manchmal => 2,
+    :haeufig  => 3,
+    :immer    => 4
+  }
   
+  after_save :calculate_influence_values
   
   def self.find_all
     CouchPotato.database.view all
@@ -53,6 +32,27 @@ class Survey
   
   def self.find(id)
     CouchPotato.database.load_document id.to_s
+  end
+  
+  DIMENSIONS.each do |name, directions|
+    first = directions.first
+    last = directions.last
+    self.class_eval %Q{
+      #{
+        direction_methods = directions.collect do |direction|
+          %Q{
+            def #{direction}_value
+              descriptions.#{direction}_descriptions.collect(&:value).compact.sum
+            end
+          }
+        end
+        direction_methods
+      }
+    
+      def #{name}_value
+        (#{first}_value - #{last}_value)/2.0
+      end
+    }
   end
   
 end
