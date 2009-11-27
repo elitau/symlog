@@ -7,11 +7,11 @@
     <%= f.label :described_person %><br />
     <%= f.text_field :described_person %>
   </p>
-  <%- Survey.person_descriptions.each_with_index do |desc, i|-%>
+  <%- Symlog::Description.names.each_with_index do |desc, i|-%>
     <p>
       <%= f.label desc, "#{i+1}.#{t(desc, :scope => :survey)}" %><br />
-      <%- Survey::POSSIBLE_RATINGS.each do |rating_name| -%>
-        <%= f.radio_button desc, rating_name %> <%= rating_name %> &nbsp;&nbsp;
+      <%- Survey::POSSIBLE_RATINGS.each do |rating_name, value| -%>
+        <%= f.radio_button desc, value %> <%= rating_name %> &nbsp;&nbsp;
       <%- end %>
     </p>
   <%- end -%>

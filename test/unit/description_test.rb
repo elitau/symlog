@@ -17,6 +17,12 @@ class DescriptionTest < ActiveSupport::TestCase
     assert_equal 26, all_desc.size
   end
   
+  def test_should_create_all_from_survey
+    assert all_desc = Description.create_all_from_survey(create_survey)
+    assert_kind_of Description, all_desc.first
+    assert_equal 26, all_desc.size
+  end
+  
   def test_should_have_upward_descriptions
     upward = Description.upward_descriptions
     assert_equal 9, upward.size

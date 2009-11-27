@@ -3,6 +3,13 @@
   <%=h @survey.described_person %>
 </p>
 
+<%- @survey.dimensions.each do |dimension| -%>
+  <p>
+    <b><%= dimension.name %> value:</b>
+    <%= dimension.value %>
+  </p>
+<%- end -%>
+
 
 <%= link_to 'Edit', edit_survey_path(@survey) %> |
 <%= link_to 'Back', surveys_path %>

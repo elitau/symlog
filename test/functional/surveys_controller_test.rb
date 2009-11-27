@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class SurveysControllerTest < ActionController::TestCase
+  def setup
+    @survey = create_survey
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -14,14 +18,14 @@ class SurveysControllerTest < ActionController::TestCase
 
   test "should create survey" do
     assert_difference('Survey.count') do
-      post :create, :survey => { }
+      post :create, :survey => { :aktiv => "2" }
     end
 
     assert_redirected_to survey_path(assigns(:survey))
   end
 
   test "should show survey" do
-    get :show, :id => surveys(:one).to_param
+    get :show, :id => create_survey.to_param
     assert_response :success
   end
 
@@ -41,5 +45,9 @@ class SurveysControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to surveys_path
+  end
+  
+  def teardown
+    CouchPotato.datadabe.delete @survey.id
   end
 end
