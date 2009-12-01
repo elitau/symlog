@@ -4,6 +4,7 @@ class Survey
   include Symlog
   
   property :described_person
+  property :person_who_describes
   
   # Person descriptions
   Description.names.each do |name|
@@ -19,6 +20,8 @@ class Survey
     :haeufig  => 3,
     :immer    => 4
   }
+  
+  PEOPLE_TO_DESCRIBE = %w(Andi Andreas Björn Dirk Ede Ethem Mike )
   
   def self.find_all
     CouchPotato.database.view all
