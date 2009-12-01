@@ -41,47 +41,48 @@ module Symlog
     end
     
     def self.url(dimensions)
-      chart = GChart.scatter do |g|
-        data = (0..9).to_a
-        sizes = (0..9).to_a.collect{|i| i*100}
-        
-        g.data   = [data, data, sizes]
-        # g.colors = [:red,                  :black]
-        # g.legend = ["Line",                "Wonkiness"]
-        g.extras = { "chg" => "25,25" }
-        
-        g.width             = 540
-        g.height            = 540
-        g.entire_background = "f4f4f4"
-        # 
-        axis_range = (0)..(10.0)
-        label_positions = [5]
-        g.axis(:left) do |a| 
-          # a.range = axis_range
-          # a.labels = ["N"]
-          # a.label_positions = label_positions
-        end
-        # 
-        # g.axis :right do |a|
-        #   a.range = axis_range
-        #   a.labels = ["P"]
-        #   a.label_positions = label_positions
-        # end
-        # 
-        g.axis :top do |a|
-          a.range = axis_range
-          a.labels = ["F"]
-          a.label_positions = label_positions
-        end
-        # 
-        g.axis :bottom do |a|
-          a.range = axis_range
-          # a.labels          = ["B"]
-          a.label_positions = label_positions
-        end
-      end
-
-      chart.to_url
+      # chart = GChart.scatter do |g|
+      #   data = (0..9).to_a
+      #   sizes = (0..9).to_a.collect{|i| i*100}
+      #   
+      #   g.data   = [data, data, sizes]
+      #   # g.colors = [:red,                  :black]
+      #   # g.legend = ["Line",                "Wonkiness"]
+      #   g.extras = { "chg" => "25,25" }
+      #   
+      #   g.width             = 540
+      #   g.height            = 540
+      #   g.entire_background = "f4f4f4"
+      #   # 
+      #   axis_range = (0)..(10.0)
+      #   label_positions = [5]
+      #   g.axis(:left) do |a| 
+      #     # a.range = axis_range
+      #     # a.labels = ["N"]
+      #     # a.label_positions = label_positions
+      #   end
+      #   # 
+      #   # g.axis :right do |a|
+      #   #   a.range = axis_range
+      #   #   a.labels = ["P"]
+      #   #   a.label_positions = label_positions
+      #   # end
+      #   # 
+      #   g.axis :top do |a|
+      #     a.range = axis_range
+      #     a.labels = ["F"]
+      #     a.label_positions = label_positions
+      #   end
+      #   # 
+      #   g.axis :bottom do |a|
+      #     a.range = axis_range
+      #     # a.labels          = ["B"]
+      #     a.label_positions = label_positions
+      #   end
+      # end
+      # 
+      # chart.to_url
+      ""
     end
     
   end
