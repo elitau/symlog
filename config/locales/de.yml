@@ -30,10 +30,6 @@ de:
     behaglich: "behaglich, gemütlich, zufrieden"
     passiv: "passiv, introvertiert, spricht wenig"
     
-    
-    
-    
-    
   date:
     formats:
       default: "%d.%m.%Y"

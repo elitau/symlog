@@ -10,6 +10,10 @@
   </p>
 <%- end -%>
 
-
+<img src="<%= @dimensions_image_url %>" alt="github" />
+<br/>
+<p>
+  <%= @dimensions_image_url.split("&").join("<br/>") %>
+</p>
 <%= link_to 'Edit', edit_survey_path(@survey) %> |
 <%= link_to 'Back', surveys_path %>

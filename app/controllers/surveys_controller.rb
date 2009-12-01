@@ -14,7 +14,8 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-
+    @dimensions_image_url = Symlog::Chart.url(@survey.dimensions)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
