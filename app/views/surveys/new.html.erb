@@ -1,55 +1,36 @@
 <h1>Neue Befragung</h1>
 
-<p>
-  SYMLOG, an acronym for the System for Multiple Level Observation of Groups,
-  represents both theory and method for defining and analyzing the interaction
-  among group participants. Based upon Bales's life work, SYMLOG provides
-  efficient data-capture techniques allowing managers and interventionists to
-  collect group member perceptions about the interaction in their work group
-  or in the larger organization. SYMLOG, as introduced by Bales and Cohen
-  (1979), has been subjected to validity and reliability investigations; minor
-  revisions have emerged. Researchers are using SYMLOG in their investigations
-  of group and organizational communication; consultants are using SYMLOG to
-  distinguish among work groups and provide effective feedback in
-  interventions.
-</p>
-
-<p>
-  Dieses Verfahren versucht durch das Verhalten von Personen auf ihre sozio-psychologischen Eigenschaften zu schließen. Dabei entsteht kein objektives Bild einer Person, vielmehr werden die Meinungen und Erfahrungen der anderen Teammitglieder zu einem Gesamtbild vermengt, dem so genannten Fremdbild. Damit sollen Fragen wie
-  
-  <ul>
-    <li>Wie sehen mich die anderen Teammitglieder?</li>
-    <li>Wie wirke ich auf die anderen Teammitglieder?</li>
-    <li>usw.</li>
-  </ul>
-  beantwortet werden.
-</p>
-
-<p>
-  Im folgenden sind 26 Verhaltensweisen von Menschen notiert, mit jeweils einer Auswahlmöglichkeit für nie, selten, manchmal, häufig oder immer. Trefft bitte für jede Verhaltensweise eine Auswahl. Wenn mal zu einem Punkt keine Aussage getroffen werden kann, bitte "nie" auswählen. Dieser Wert wird dann bei der Auswertung nicht in die Berechnung einbezogen.
-</p>
-
-<p>Sobald die Befragung von allen im Team abgeschlossen ist, werde ich die Auswertung online stellen und euch das Ergebnis erläutern.</p>
-
 <% form_for(@survey) do |f| %>
   <%= f.error_messages %>
-
   <p>
     <%= f.label :person_who_describes, t(:person_who_describes, :scope => :survey) %><br />
-    <%= f.text_field :person_who_describes %>
+    <%= f.text_field :person_who_describes, :value => (session[:person_who_describes] or "")  %>
   </p>
   <p>
     <%= f.label :described_person, t(:described_person, :scope => :survey) %><br />
     <%= f.select(:described_person, Survey::PEOPLE_TO_DESCRIBE) %>
   </p>
-  <%- Symlog::Description.names.each_with_index do |desc, i|-%>
-    <p>
-      <%= f.label desc, "#{i+1}.#{t(desc, :scope => :survey)}" %><br />
-      <%- Survey::POSSIBLE_RATINGS.each do |rating_name, value| -%>
-        <%= f.radio_button desc, value %> <%= rating_name %> &nbsp;&nbsp;
-      <%- end %>
-    </p>
-  <%- end -%>
+  
+  <table>
+    <th class="row_label">
+      <td>nie</td>
+      <td>selten</td>
+      <td>manchmal</td>
+      <td>h&auml;ufig</td>
+      <td>immer</td>
+    </th>
+    <%- Symlog::Description.names.each_with_index do |desc, i|-%>
+      <tr class="table_row">
+        <td class="row_label"><%= f.label desc, "#{i+1}. #{t(desc, :scope => :survey)}" %></td>
+        <%- Survey::POSSIBLE_RATINGS.each do |value| -%>
+          <td class="row_label">
+            <%= f.radio_button desc, value %>
+          </td>
+        <%- end %>
+      </tr>
+    <% end %>
+  </table>
+
   <p>
     <%= f.submit 'Create' %>
   </p>

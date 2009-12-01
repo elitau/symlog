@@ -42,7 +42,7 @@ class SurveysController < ApplicationController
   # POST /surveys.xml
   def create
     @survey = Survey.new(params[:survey])
-
+    session[:person_who_describes] = @survey.person_who_describes
     respond_to do |format|
       if @survey.save
         flash[:notice] = 'Survey was successfully created.'

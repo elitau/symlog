@@ -1,3 +1,13 @@
+.table_row{
+	font-size:   15px;
+  line-height: 25px;
+	height: 35px;
+}
+
+.row_label{
+	font-size:   15px;
+}
+
 body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {

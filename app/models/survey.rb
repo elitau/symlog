@@ -13,13 +13,15 @@ class Survey
   
   view :all, :key => :created_at
   
-  POSSIBLE_RATINGS = {
-    :nie      => 0,
-    :selten   => 1,
-    :manchmal => 2,
-    :haeufig  => 3,
-    :immer    => 4
-  }
+  POSSIBLE_RATINGS = [0,1,2,3,4]
+  
+  # {
+  #   :nie      => 0,
+  #   :selten   => 1,
+  #   :manchmal => 2,
+  #   :haeufig  => 3,
+  #   :immer    => 4
+  # }
   
   PEOPLE_TO_DESCRIBE = %w(Andi Andreas Björn Dirk Ede Ethem Mike )
   

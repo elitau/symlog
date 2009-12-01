@@ -3,13 +3,13 @@
 
 de:
   survey:
-    person_who_describes: "Bitte gib deinen Namen an:"
-    described_person: "Bitte wähle eine Person aus, die du beschreiben willst:"
+    person_who_describes: "Dein Name:"
+    described_person: "Name der Person die du beschreiben willst:"
     
     aktiv: "aktiv, dominant, spricht viel"
     extravertiert: "extravertiert, geht aus sich heraus, sicher, beliebt"
     zielbewusst: "zielbewußter und aufgabenorientierter, demokratischer Leiter"
-    tatkräftig: "tatkräftig und durchsetzungsfähig"
+    tatkraeftig: "tatkräftig und durchsetzungsfähig"
     disziplinierend: "disziplinierend, folgerichtig"
     dominant: "dominant, eigensinnig, nachdrücklich"
     geltungssuchend: "geltungssuchend, selbstbezogen, provozierend"
