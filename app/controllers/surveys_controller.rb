@@ -26,7 +26,7 @@ class SurveysController < ApplicationController
   # GET /surveys/new.xml
   def new
     @survey = Survey.new
-
+    @people_to_describe = Survey::PEOPLE_TO_DESCRIBE - (session[:already_described_person] ||= [])
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @survey }
@@ -43,6 +43,7 @@ class SurveysController < ApplicationController
   def create
     @survey = Survey.new(params[:survey])
     session[:person_who_describes] = @survey.person_who_describes
+    session[:already_described_person] << @survey.described_person
     respond_to do |format|
       if @survey.save
         flash[:notice] = 'Survey was successfully created.'

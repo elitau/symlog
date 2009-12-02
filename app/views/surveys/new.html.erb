@@ -8,7 +8,7 @@
   </p>
   <p>
     <%= f.label :described_person, t(:described_person, :scope => :survey) %><br />
-    <%= f.select(:described_person, Survey::PEOPLE_TO_DESCRIBE) %>
+    <%= f.select(:described_person, @people_to_describe) %>
   </p>
   
   <table>
