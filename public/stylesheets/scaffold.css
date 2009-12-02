@@ -21,6 +21,10 @@
 	border-bottom: 1px solid;
 }
 
+.labeling{
+	display: block;
+}
+
 .centerize{
 	text-align: center;
 }

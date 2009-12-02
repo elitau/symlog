@@ -23,9 +23,12 @@
       <tr class="table_row">
         <td class="row_label"><%= f.label desc, "#{i+1}. #{t(desc, :scope => :survey)}" %></td>
         <%- Survey::POSSIBLE_RATINGS.each do |value| -%>
-          <td class="row_label centerize">
-            <%= f.radio_button desc, value %>
-          </td>
+            <td class="row_label centerize">
+              <label class="labeling" for="<%= "#{i+1}_#{value}" %>">&nbsp;
+                 <%= f.radio_button desc, value, :id => "#{i+1}_#{value}" %>
+              </label>
+            </td>
+          
         <%- end %>
       </tr>
     <% end %>
