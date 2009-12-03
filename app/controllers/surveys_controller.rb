@@ -14,7 +14,7 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-    @dimensions_image_url = Symlog::Chart.url(@survey.dimensions)
+    # @dimensions_image_url =Symlog::Chart.url(@survey.dimensions)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -44,6 +44,7 @@ class SurveysController < ApplicationController
     @survey = Survey.new(params[:survey])
     session[:person_who_describes] = @survey.person_who_describes
     session[:already_described_person] << @survey.described_person
+    
     respond_to do |format|
       if @survey.save
         flash[:notice] = 'Survey was successfully created.'
