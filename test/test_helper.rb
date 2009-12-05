@@ -37,7 +37,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   
   def create_survey(attributes = {})
-    default_value = Survey::POSSIBLE_RATINGS.values.first
+    default_value = Survey::POSSIBLE_RATINGS.first
     default_attributes = {
       :macht_spaesse     => "10".to_i, #[:upward, :backward]},
       :optimitstisch     => "2".to_i, #[:upward, :positive, :backward]},

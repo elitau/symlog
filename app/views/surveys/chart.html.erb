@@ -1,0 +1,90 @@
+<h1>Symlog-Felddiagramm</h1>
+
+<div>
+  <div id="canvas">
+
+  </div>
+
+  <div id="legend">
+
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var diagram_width = 600;
+  var diagram_height = diagram_width;
+  var border = 20;
+  var half_border = 10;
+  var canvas = Raphael("canvas", diagram_width+border*2, diagram_height+border*2);
+  var legend = Raphael("legend", 80, 400);
+  var zero_width = (diagram_width+border*2)/2;
+  var zero_height = (diagram_height+border*2)/2;
+  
+  // pixel to real values umrechnung
+  var one_unit_pixels = diagram_height/50;
+  
+  //draw the diagram
+  canvas.rect(0+border, 0+border, diagram_width, diagram_height);
+  canvas.rect(0+border,0+border,diagram_width/2, diagram_height/2);
+  canvas.rect(diagram_width/2+border, diagram_height/2+border,diagram_width/2, diagram_height/2);
+  
+  //draw some indexes
+  function draw_index (x, y, orientation) {
+    for (var i = 115; i >= 0; i--){
+      var step = i*5;
+      var size = 10;
+      if (i % 5 == 0 && (x-step != zero_width && y-step != zero_height)) {
+        size = 5;
+        if ((i % 20) == 0){
+          size = 10;
+        };
+        if (orientation == "ver") {
+          canvas.rect(x, y-step, size, 1);
+        }else{
+          canvas.rect(x-step, y, 1, size);
+        };
+        
+      };
+    };
+  }
+  
+  draw_index(diagram_width+border, zero_height, "hor");
+  draw_index(zero_height, diagram_width+border, "ver");
+  
+  //draw the dimension-names
+  canvas.text(zero_width, zero_height-diagram_height/2-border/2, "F");
+  canvas.text(zero_width, zero_height+diagram_height/2+border/2, "B");
+
+  canvas.text(zero_width-diagram_width/2-border/2, zero_height, "N");
+  canvas.text(zero_width+diagram_width/2+border/2, zero_height, "P");
+  var colors = ["red", "darkgreen", "darkblue", "black", "aqua", "gold", "greenyellow"];
+  
+  function draw_circle (name, p_n_value, f_b_value, u_d_value, color) {
+     var point = 2;
+     var default_circle = 20;
+     canvas.circle(p_n_value, f_b_value, point).attr("fill", "black");
+     canvas.circle(p_n_value, f_b_value, default_circle+u_d_value).attr("stroke", color);
+
+     canvas.text(p_n_value, f_b_value + default_circle+u_d_value+half_border, name).attr("fill", color);
+   }
+  
+  function draw_legend (name, y_position, color, u_d_value) {
+    if (u_d_value < 0) {
+      var label =  name + ": D "+u_d_value;
+    }else{
+      var label =  name + ": U "+u_d_value;
+    };
+    legend.text(40, y_position, label).attr("fill", color);
+  }
+
+  <%- @people.each_with_index do |person, i| -%>
+    //draw the circles
+    var p_n_value = zero_width + (one_unit_pixels * <%= person.dimensions.find{|d| d.name == :positive_negative}.value %>);
+    var f_b_value = zero_height - (one_unit_pixels * <%= person.dimensions.find{|d| d.name == :forward_backward}.value %>);
+    var u_d_value = <%= person.dimensions.find{|d| d.name == :upward_downward}.value %>;
+    var color = colors[<%= i %>]
+    draw_circle("<%= person.name %>", p_n_value, f_b_value, u_d_value, color);
+    draw_legend("<%= person.name %>", (<%= i %>*20)+20, color, u_d_value);
+  <%- end -%>
+  
+</script>

@@ -1,5 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :surveys
+  map.chart "chart",
+    :controller => "surveys",
+    :action => "chart"
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -15,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.resources :products
 
   # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  # map.resources :surveys, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller

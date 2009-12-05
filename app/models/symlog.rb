@@ -34,28 +34,30 @@ module Symlog
     {:passiv            => [:downward]}
   ]
 
-  class Chart
-    
-    def initialize(dimensions)
-      @dimensions = dimensions
-    end
-    
-    def self.url(dimensions)
-      ""
-    end
-    
-  end
-
   class Dimension
-    attr_reader :name, :value
-    def initialize(name, directions, value)
+    attr_reader :name, :directions
+    attr_accessor :value
+    
+    def initialize(name, directions = [], value = 0)
       @name = name
       @value = value
+      @directions = directions
+    end
+    
+    def to_s
+      "#Dimesion(#{id}): #{name}: #{value} "
+    end
+    
+    def +(dimension)
+      if self.name == dimension.name
+        self.value += dimension.value
+        return self
+      end
     end
     
     def self.all
       @all_dimensions ||= DIMENSIONS.collect do |name, directions|
-        self.class.new(name)
+        self.new(name, directions)
       end
       return @all_dimensions
     end
@@ -112,16 +114,6 @@ module Symlog
             return @#{direction}_desc
           end
         }
-    end
-  end
-  
-  class Person
-    attr_accessor :descriptions
-    attr_accessor :name
-    attr_accessor :surveys
-    
-    def initialize(descriptions)
-      @descriptions = descriptions
     end
   end
     
