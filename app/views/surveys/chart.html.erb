@@ -1,5 +1,7 @@
 <h1>Symlog-Felddiagramm</h1>
 
+<p>Die Größe des Kreises gibt die Dimension "Einfluß nehmend vs. Einfluß verzichtend" an. In der Legende ist der abgebildete Kreis die "neutrale" Einheit.</p>
+
 <div>
   <div id="canvas">
 
@@ -16,7 +18,7 @@
   var border = 20;
   var half_border = 10;
   var canvas = Raphael("canvas", diagram_width+border*2, diagram_height+border*2);
-  var legend = Raphael("legend", 80, 400);
+  var legend = Raphael("legend", 200, 400);
   var zero_width = (diagram_width+border*2)/2;
   var zero_height = (diagram_height+border*2)/2;
   
@@ -52,20 +54,24 @@
   draw_index(zero_height, diagram_width+border, "ver");
   
   //draw the dimension-names
-  canvas.text(zero_width, zero_height-diagram_height/2-border/2, "F");
-  canvas.text(zero_width, zero_height+diagram_height/2+border/2, "B");
+  canvas.text(zero_width, zero_height-diagram_height/2-border/2, "zielgerichtet/kontrolliert");
+  canvas.text(zero_width, zero_height+diagram_height/2+border/2, "gefühlsbestimmt/ausdrucksvoll");
 
-  canvas.text(zero_width-diagram_width/2-border/2, zero_height, "N");
-  canvas.text(zero_width+diagram_width/2+border/2, zero_height, "P");
+  canvas.text(zero_width-diagram_width/2-border/2, zero_height, "unfreundlich").rotate(-90);
+  canvas.text(zero_width+diagram_width/2+border/2, zero_height, "freundlich").rotate(90);
   var colors = ["red", "darkgreen", "darkblue", "black", "aqua", "gold", "greenyellow"];
   
   function draw_circle (name, p_n_value, f_b_value, u_d_value, color) {
-     var point = 2;
-     var default_circle = 20;
-     canvas.circle(p_n_value, f_b_value, point).attr("fill", "black");
-     canvas.circle(p_n_value, f_b_value, default_circle+u_d_value).attr("stroke", color);
-
-     canvas.text(p_n_value, f_b_value + default_circle+u_d_value+half_border, name).attr("fill", color);
+    var paper = canvas;
+    if (name == "") {
+      paper = legend;
+    };
+    var point = 2;
+    var default_circle = 20;
+    paper.circle(p_n_value, f_b_value, point).attr("fill", "black");
+    paper.circle(p_n_value, f_b_value, default_circle+u_d_value).attr("stroke", color);
+    
+    paper.text(p_n_value, f_b_value + default_circle+u_d_value+7, name).attr("fill", color);
    }
   
   function draw_legend (name, y_position, color, u_d_value) {
@@ -84,7 +90,8 @@
     var u_d_value = <%= person.dimensions.find{|d| d.name == :upward_downward}.value %>;
     var color = colors[<%= i %>]
     draw_circle("<%= person.name %>", p_n_value, f_b_value, u_d_value, color);
-    draw_legend("<%= person.name %>", (<%= i %>*20)+20, color, u_d_value);
+    draw_legend("<%= person.name %>", (<%= i %>*20)+10, color, u_d_value);
   <%- end -%>
+  draw_circle("", 130, 25, 0, "black");
   
 </script>
