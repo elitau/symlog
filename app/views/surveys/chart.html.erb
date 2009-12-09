@@ -1,19 +1,27 @@
 <h1>Symlog-Felddiagramm</h1>
 
 <p>Die Größe des Kreises gibt die Dimension "Einfluß nehmend vs. Einfluß verzichtend" an. In der Legende ist der abgebildete Kreis die "neutrale" Einheit.</p>
+<table border="0" cellspacing="5" cellpadding="5">
+  <tr><td>
+    <div id="canvas">
 
+    </div>
+  </td>
+  <td>
+    <div id="legend">
+
+   </div>
+  </td>
+  </tr>
+
+</table>
 <div>
-  <div id="canvas">
-
-  </div>
-
-  <div id="legend">
-
-  </div>
+  
+ 
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  var diagram_width = 600;
+  var diagram_width = 800;
   var diagram_height = diagram_width;
   var border = 20;
   var half_border = 10;
@@ -23,7 +31,7 @@
   var zero_height = (diagram_height+border*2)/2;
   
   // pixel to real values umrechnung
-  var one_unit_pixels = diagram_height/50;
+  var one_unit_pixels = diagram_height/100;
   
   //draw the diagram
   canvas.rect(0+border, 0+border, diagram_width, diagram_height);
@@ -54,11 +62,11 @@
   draw_index(zero_height, diagram_width+border, "ver");
   
   //draw the dimension-names
-  canvas.text(zero_width, zero_height-diagram_height/2-border/2, "zielgerichtet/kontrolliert");
-  canvas.text(zero_width, zero_height+diagram_height/2+border/2, "gefühlsbestimmt/ausdrucksvoll");
+  canvas.text(zero_width, zero_height-diagram_height/2-border/2, "zielgerichtet / kontrolliert oder Aufgaben- und Normorientierung");
+  canvas.text(zero_width, zero_height+diagram_height/2+border/2, "gefühlsbestimmt / ausdrucksvoll oder Nonkonformismus, Emotionalität");
 
-  canvas.text(zero_width-diagram_width/2-border/2, zero_height, "unfreundlich").rotate(-90);
-  canvas.text(zero_width+diagram_width/2+border/2, zero_height, "freundlich").rotate(90);
+  canvas.text(zero_width-diagram_width/2-border/2, zero_height, "Abgrenzung").rotate(-90);
+  canvas.text(zero_width+diagram_width/2+border/2, zero_height, "Offenheit / Zuwendung").rotate(90);
   var colors = ["red", "darkgreen", "darkblue", "black", "aqua", "gold", "greenyellow"];
   
   function draw_circle (name, p_n_value, f_b_value, u_d_value, color) {
@@ -95,3 +103,25 @@
   draw_circle("", 130, 25, 0, "black");
   
 </script>
+
+<h2>Interpretation des Diagramms</h2>
+
+<h3>Persönliche Interpretation</h3>
+<p>
+  Die obige Darstellung zeigt das dreidimensionale Bezugssystem zur Beschreibung und Bewertung von Verhalten in Gruppen (SYMLOG-Raummodell). Eingezeichnet ist das gemittelte Fremdbild für jedes Teammitglied, welches sich aus dem Durchschnitt der durchgeführten Umfragen ergibt.
+</p>
+<p>
+  Die Ausprägungen hinsichtlich der Dimension der Einflussnahme versus Zurückhaltung sind durch entsprechende Kreisgrößen symbolisiert. Je größer der Kreis, desto einflussreicher wurde eine Person eingeschätzt. Der jeweilige Kennwert steht in der Legende neben dem Namen.
+</p>
+<p>
+  
+</p>
+
+<!-- <h3>Systematik der SYMLOG-Leitvorstellungen</h3>
+<p>
+  Hier eine Schaubild zur möglichen Interpretation der unterschiedlichen Dimensionen bzw. Lage der Ergebnisse innerhalb des Diagramms.
+  <img src="/images/systematik.png" />
+</p> -->
+
+
+
