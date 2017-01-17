@@ -1,1 +1,0 @@
-CouchPotato::Config.database_name = 'symlog'
