@@ -18,7 +18,7 @@ class SurveysControllerTest < ActionController::TestCase
 
   test "should create survey" do
     get :new # Create session
-    post :create, params: { survey: @survey.attributes }
+    post :create, params: { survey: @survey.attributes.merge(described_person: 'Bob', person_who_describes: 'Alice') }
     # @survey = assigns :survey
     assert_redirected_to survey_path(Survey.last)
   end
