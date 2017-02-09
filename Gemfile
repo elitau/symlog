@@ -34,7 +34,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'mongoid', '~> 6'
-gem 'bson_ext'
+gem 'bson_ext', '~> 1.5.1'
+gem 'rollbar', '~> 2.14.0'
+gem 'oj', '~> 2.18.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
