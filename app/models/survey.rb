@@ -11,6 +11,9 @@ class Survey
     field name, type: Integer
   end
 
+  validates *Description.names, presence: true
+  validates :described_person, :person_who_describes, presence: true
+
   POSSIBLE_RATINGS = [0,1,2,3,4]
 
   PEOPLE_TO_DESCRIBE = %w(Alice Bob Mike George)

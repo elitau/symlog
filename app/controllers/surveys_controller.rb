@@ -29,7 +29,7 @@ class SurveysController < ApplicationController
   # GET /surveys/new.xml
   def new
     @survey = Survey.new
-    @people_to_describe = Survey::PEOPLE_TO_DESCRIBE - (session[:already_described_person] ||= [])
+    @people_to_describe = people_to_describe
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @survey }
@@ -41,16 +41,15 @@ class SurveysController < ApplicationController
   def create
     @survey = Survey.new(surveys_params)
     session[:person_who_describes] = @survey.person_who_describes
-    session[:already_described_person] << @survey.described_person
 
     respond_to do |format|
       if @survey.save
         flash[:notice] = 'Survey was successfully created.'
+        session[:already_described_person] << @survey.described_person
         format.html { redirect_to(@survey) }
-        format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @survey.errors, :status => :unprocessable_entity }
+        @people_to_describe = people_to_describe
+        format.html { render action: "new" }
       end
     end
   end
@@ -58,7 +57,11 @@ class SurveysController < ApplicationController
   private
 
   def surveys_params
-    params.require(:survey).permit(*SymlogModel::Description.names)
+    params.require(:survey).permit([*SymlogModel::Description.names, :described_person, :person_who_describes]) #.permit()
+  end
+
+  def people_to_describe
+    Survey::PEOPLE_TO_DESCRIBE - (session[:already_described_person] ||= [])
   end
 
 end
