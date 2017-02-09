@@ -1,8 +1,8 @@
-module Symlog
+module SymlogModel
   DIRECTIONS = [:upward, :downward, :positive, :negative, :forward, :backward]
   DIMENSIONS = {
     :upward_downward => DIRECTIONS[0,2],
-    :positive_negative => DIRECTIONS[2,2], 
+    :positive_negative => DIRECTIONS[2,2],
     :forward_backward => DIRECTIONS[4,2]
   }
   DESCRIPTIONS = [
@@ -37,24 +37,24 @@ module Symlog
   class Dimension
     attr_reader :name, :directions
     attr_accessor :value
-    
+
     def initialize(name, directions = [], value = 0)
       @name = name
       @value = value
       @directions = directions
     end
-    
+
     def to_s
       "#Dimesion(#{id}): #{name}: #{value} "
     end
-    
+
     def +(dimension)
       if self.name == dimension.name
         self.value += dimension.value
         return self
       end
     end
-    
+
     def self.all
       @all_dimensions ||= DIMENSIONS.collect do |name, directions|
         self.new(name, directions)
@@ -62,35 +62,35 @@ module Symlog
       return @all_dimensions
     end
   end
-  
+
   class Description
     attr_reader :name, :value, :directions
-    
+
     def initialize(name, directions, value = nil)
       @name = name
       @directions = directions
       @value = value.to_i
     end
-    
+
     def self.create_all_from_survey(survey)
       DESCRIPTIONS.collect do |desc|
         self.new(name = desc.keys.first, desc.values.first, survey.send(name))
       end.extend DescriptionCollection
     end
-        
+
     def self.all
       @all_desc ||= DESCRIPTIONS.collect do |desc|
         self.new(desc.keys.first, desc.values.first)
       end.extend DescriptionCollection
       return @all_desc
     end
-    
+
     def self.names
       @names ||= DESCRIPTIONS.collect do |desc|
         desc.keys.first
       end
     end
-    
+
     DIRECTIONS.each do |dimension|
       self.instance_eval %Q{
           def #{dimension}_descriptions
@@ -101,9 +101,9 @@ module Symlog
           end
         }
     end
-    
+
   end
-  
+
   module DescriptionCollection
     DIRECTIONS.each do |direction|
       self.class_eval %Q{
@@ -116,30 +116,26 @@ module Symlog
         }
     end
   end
-    
+
   module InstanceMethods
     DIMENSIONS.each do |name, directions|
       first = directions.first
       last = directions.last
-      class_eval %Q{
-        #{
-          direction_methods = directions.collect do |direction|
-            %Q{
-              def #{direction}_value
-                descriptions.#{direction}_descriptions.collect(&:value).compact.sum
-              end
-            }
+      direction_methods = directions.map do |direction|
+        class_eval %Q{
+          def #{direction}_value
+            descriptions.#{direction}_descriptions.collect(&:value).compact.sum
           end
-          direction_methods
         }
-
+      end
+      class_eval %Q{
         def #{name}_value
           (#{first}_value - #{last}_value)/2.0
         end
       }
     end
   end
-  
+
   def self.included(receiver)
     receiver.send :include, InstanceMethods
   end

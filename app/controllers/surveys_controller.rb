@@ -14,13 +14,13 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
     end
   end
-  
+
   def chart
     @people = Person.find_all
   end
@@ -39,10 +39,10 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.xml
   def create
-    @survey = Survey.new(params[:survey])
+    @survey = Survey.new(surveys_params)
     session[:person_who_describes] = @survey.person_who_describes
     session[:already_described_person] << @survey.described_person
-    
+
     respond_to do |format|
       if @survey.save
         flash[:notice] = 'Survey was successfully created.'
@@ -53,6 +53,12 @@ class SurveysController < ApplicationController
         format.xml  { render :xml => @survey.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def surveys_params
+    params.require(:survey).permit(*SymlogModel::Description.names)
   end
 
 end

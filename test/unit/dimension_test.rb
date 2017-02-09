@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class DimensionTest < ActiveSupport::TestCase
-  include Symlog
+  include SymlogModel
 
   def test_should_sum_dimension
     dimension = Dimension.new("name", "directions", 10)

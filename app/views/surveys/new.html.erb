@@ -12,7 +12,17 @@
 
 
 <% form_for(@survey) do |f| %>
-  <%= f.error_messages %>
+  <% if @survey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+
+      <ul>
+      <% @survey.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <p>
     <%= f.label :person_who_describes, t(:person_who_describes, :scope => :survey) %><br />
     <%= f.text_field :person_who_describes, :value => (session[:person_who_describes] or "")  %>
@@ -21,7 +31,7 @@
     <%= f.label :described_person, t(:described_person, :scope => :survey) %><br />
     <%= f.select(:described_person, @people_to_describe) %>
   </p>
-  
+
   <table class="survey_table">
     <th>
       <td class="table_header centerize">nie</td>
@@ -30,7 +40,7 @@
       <td class="table_header centerize">h&auml;ufig</td>
       <td class="table_header centerize">immer</td>
     </th>
-    <%- Symlog::Description.names.each_with_index do |desc, i|-%>
+    <%- SymlogModel::Description.names.each_with_index do |desc, i|-%>
       <tr class="table_row">
         <td class="row_label"><%= f.label desc, "#{i+1}. #{t(desc, :scope => :survey)}" %></td>
         <%- Survey::POSSIBLE_RATINGS.each do |value| -%>
@@ -39,7 +49,7 @@
                  <%= f.radio_button desc, value, :id => "#{i+1}_#{value}" %>
               </label>
             </td>
-          
+
         <%- end %>
       </tr>
     <% end %>

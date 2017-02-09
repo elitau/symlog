@@ -1,22 +1,22 @@
 class Person
   attr_reader :surveys, :name
-  
+
   def initialize(name, surveys)
     @name = name
     @surveys = surveys
   end
-  
+
   def dimensions
     @dimensions ||= calculate_dimensions
     return @dimensions
   end
-  
+
   def calculate_dimensions
     @dimensions = []
-    Symlog::Dimension.all.each do |d|
-      @dimensions << Symlog::Dimension.new(d.name)
+    SymlogModel::Dimension.all.each do |d|
+      @dimensions << SymlogModel::Dimension.new(d.name)
     end
-    
+
     self.surveys.each do |survey|
       @dimensions.each do |dimension|
         dimension + survey.dimensions.find{|d| d.name == dimension.name}
@@ -24,7 +24,7 @@ class Person
     end
     return @dimensions
   end
-  
+
   def self.find_all
     surveys = Survey.find_all
     people = []
@@ -35,4 +35,4 @@ class Person
     return people
   end
 end
-    
+
