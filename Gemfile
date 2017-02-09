@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.2.6'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -32,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'mongoid' #, '~> 4'
+gem 'mongoid', '~> 6'
 gem 'bson_ext'
 
 # Use Capistrano for deployment
