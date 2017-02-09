@@ -1,3 +1,0 @@
-development: symlog
-test: symlog_test
-production: symlog
