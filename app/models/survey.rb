@@ -11,28 +11,13 @@ class Survey
     field name, type: Integer
   end
 
-  # view :all, :key => :created_at
-
   POSSIBLE_RATINGS = [0,1,2,3,4]
 
-  PEOPLE_TO_DESCRIBE = %w(Andi Andreas Björn Dirk Ede Ethem Mike )
+  PEOPLE_TO_DESCRIBE = %w(Alice Bob Mike George)
 
   def self.find_all
-    # CouchPotato.database.view all
     all
   end
-
-  def self.count
-    find_all.size
-  end
-
-  # def save
-  #   CouchPotato.database.save_document self
-  # end
-
-  # def self.find(id)
-  #   CouchPotato.database.load_document id.to_s
-  # end
 
   def descriptions
     @descriptions ||= Description.create_all_from_survey(self)
